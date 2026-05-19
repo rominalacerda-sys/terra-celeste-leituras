@@ -80,14 +80,8 @@ function Nav() {
 
 function Hero() {
   return (
-    <header id="top" className="relative min-h-[100svh] overflow-hidden">
+    <header id="top" className="relative min-h-[100svh] overflow-hidden bg-background">
       <Nav />
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroVase})` }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
 
       <div className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-center px-6 pt-32 md:px-12">
         <Label>Astrologia · Rio de Janeiro</Label>
