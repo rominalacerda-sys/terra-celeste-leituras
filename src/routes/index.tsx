@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import heroVase from "@/assets/hero-vase.png";
 import portrait from "@/assets/romina-portrait.jpg";
 
 export const Route = createFileRoute("/")({
@@ -81,14 +80,8 @@ function Nav() {
 
 function Hero() {
   return (
-    <header id="top" className="relative min-h-[100svh] overflow-hidden">
+    <header id="top" className="relative min-h-[100svh] overflow-hidden bg-background">
       <Nav />
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${heroVase})` }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/30" />
 
       <div className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-center px-6 pt-32 md:px-12">
         <Label>Astrologia · Rio de Janeiro</Label>
@@ -218,27 +211,18 @@ function Bio() {
 
 const SERVICES = [
   {
-    n: "i.",
     title: "Mapa Natal",
     body: "O mapa natal não é uma previsão. É um retrato simbólico da psique — os padrões que você carrega, os recursos que ainda não acessou, as tensões que se repetem pedindo consciência. É o ponto de partida — e muitas vezes o ponto de virada.",
   },
   {
-    n: "ii.",
     title: "Ano que se Abre",
     body: "A cada aniversário, o Sol retorna ao ponto exato onde estava quando você nasceu. Esse momento gera um novo mapa — o tema do ciclo que está começando. Não como destino. Como convite — para entender o que esse ano está pedindo de você.",
   },
   {
-    n: "iii.",
     title: "Travessias",
     body: "Os planetas continuam se movendo depois que você nasce. Quando tocam pontos do seu mapa natal, ativam processos internos e provocam acontecimentos externos. A pergunta não é 'o que vai acontecer?' — é 'o que está sendo chamado a crescer em mim agora?'",
   },
   {
-    n: "iv.",
-    title: "Sinastria",
-    body: "Dois mapas em diálogo. A sinastria revela onde dois mundos internos se encontram — os pontos de ressonância, as tensões criativas, o que um desperta no outro. Para casais, parceiros, familiares ou sócios.",
-  },
-  {
-    n: "v.",
     title: "Navegando nas Marés Interiores",
     body: "A cada 27-28 dias, a Lua retorna ao ponto exato onde estava quando você nasceu. Um acompanhamento mensal para quem quer atravessar seus ciclos emocionais com mais consciência e clareza.",
   },
@@ -247,24 +231,9 @@ const SERVICES = [
 function Services() {
   return (
     <Section id="consultas" num="02" title="Consultas">
-      <div className="grid gap-12 md:grid-cols-12 md:items-end">
-        <h2 className="md:col-span-8 font-serif text-4xl leading-[1.1] text-cream md:text-6xl">
-          <em>A leitura como uma forma de <Terra>atenção</Terra>.</em>
-        </h2>
-        <div className="md:col-span-4">
-          <p className="font-serif text-lg italic text-cream/80">
-            Leituras para atravessar ciclos com mais clareza.
-          </p>
-          <a
-            href={WHATSAPP}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-6 inline-flex items-center gap-3 bg-terracotta px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-background transition-all hover:bg-terracotta/85"
-          >
-            Agendar via WhatsApp →
-          </a>
-        </div>
-      </div>
+      <h2 className="max-w-4xl font-serif text-4xl leading-[1.1] text-cream md:text-6xl">
+        <em>Leituras para atravessar ciclos com mais <Terra>clareza</Terra>.</em>
+      </h2>
 
       <div className="mt-20 grid gap-px bg-border md:grid-cols-2">
         {SERVICES.map((s) => (
@@ -272,18 +241,26 @@ function Services() {
             key={s.title}
             className="group bg-background p-10 transition-colors hover:bg-card md:p-12"
           >
-            <div className="flex items-baseline gap-4">
-              <span className="label !text-terracotta">{s.n}</span>
-              <h3 className="font-serif text-2xl italic text-cream md:text-3xl">
-                {s.title}
-              </h3>
-            </div>
+            <h3 className="font-serif text-2xl italic text-cream md:text-3xl">
+              {s.title}
+            </h3>
             <div className="mt-6 h-px w-12 bg-terracotta/40 transition-all group-hover:w-20" />
             <p className="mt-6 font-serif text-base leading-[1.8] text-cream/85">
               {s.body}
             </p>
           </article>
         ))}
+      </div>
+
+      <div className="mt-16 flex justify-center">
+        <a
+          href={WHATSAPP}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-3 bg-terracotta px-7 py-4 text-sm font-medium uppercase tracking-[0.18em] text-background transition-all hover:bg-terracotta/85"
+        >
+          Agendar via WhatsApp →
+        </a>
       </div>
     </Section>
   );
@@ -398,7 +375,7 @@ function Contact() {
   return (
     <Section id="contato" num="05" title="Contato">
       <h2 className="max-w-4xl font-serif text-4xl leading-[1.1] text-cream md:text-6xl">
-        <em>Se algo aqui <Terra>tocou</Terra> você.</em>
+        <em>Quer entender o que o seu <Terra>céu</Terra> tem a dizer?</em>
       </h2>
       <p className="mt-10 max-w-2xl font-serif text-lg leading-[1.8] text-cream/85">
         Escreva algumas linhas sobre o que te traz. Cada mensagem é lida com
