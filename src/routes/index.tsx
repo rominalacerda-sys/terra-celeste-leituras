@@ -211,27 +211,18 @@ function Bio() {
 
 const SERVICES = [
   {
-    n: "i.",
     title: "Mapa Natal",
     body: "O mapa natal não é uma previsão. É um retrato simbólico da psique — os padrões que você carrega, os recursos que ainda não acessou, as tensões que se repetem pedindo consciência. É o ponto de partida — e muitas vezes o ponto de virada.",
   },
   {
-    n: "ii.",
     title: "Ano que se Abre",
     body: "A cada aniversário, o Sol retorna ao ponto exato onde estava quando você nasceu. Esse momento gera um novo mapa — o tema do ciclo que está começando. Não como destino. Como convite — para entender o que esse ano está pedindo de você.",
   },
   {
-    n: "iii.",
     title: "Travessias",
     body: "Os planetas continuam se movendo depois que você nasce. Quando tocam pontos do seu mapa natal, ativam processos internos e provocam acontecimentos externos. A pergunta não é 'o que vai acontecer?' — é 'o que está sendo chamado a crescer em mim agora?'",
   },
   {
-    n: "iv.",
-    title: "Sinastria",
-    body: "Dois mapas em diálogo. A sinastria revela onde dois mundos internos se encontram — os pontos de ressonância, as tensões criativas, o que um desperta no outro. Para casais, parceiros, familiares ou sócios.",
-  },
-  {
-    n: "v.",
     title: "Navegando nas Marés Interiores",
     body: "A cada 27-28 dias, a Lua retorna ao ponto exato onde estava quando você nasceu. Um acompanhamento mensal para quem quer atravessar seus ciclos emocionais com mais consciência e clareza.",
   },
