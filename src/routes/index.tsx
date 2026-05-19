@@ -86,13 +86,13 @@ function Hero() {
       <div className="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-center px-6 pt-32 md:px-12">
         <Label>Astrologia · Rio de Janeiro</Label>
         <h1 className="mt-8 font-serif text-5xl leading-[1.05] tracking-tight text-cream md:text-7xl lg:text-[5.5rem]">
-          <em>O céu não prevê —</em>
-          <br />
-          <em>ele apenas <Terra>acompanha</Terra>.</em>
+          <em>O céu te <Terra>convida</Terra>.</em>
         </h1>
-        <p className="mt-10 max-w-xl text-lg leading-relaxed text-cream/85 md:text-xl">
-          Uma prática brasileira de astrologia psicológica e transpessoal.
-          Leituras para atravessar ciclos com mais clareza.
+        <p className="mt-10 max-w-xl text-lg leading-relaxed text-cream/85 md:text-xl italic font-serif">
+          Mapa astral é a fotografia do céu no momento do nascimento — a representação dos arquétipos que todos nós possuímos.
+        </p>
+        <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/50">
+          Uma prática de Astrologia Psicológica e Transpessoal. Leituras para atravessar ciclos com mais clareza.
         </p>
         <div className="mt-12 flex flex-wrap items-center gap-6">
           <a
