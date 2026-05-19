@@ -231,24 +231,9 @@ const SERVICES = [
 function Services() {
   return (
     <Section id="consultas" num="02" title="Consultas">
-      <div className="grid gap-12 md:grid-cols-12 md:items-end">
-        <h2 className="md:col-span-8 font-serif text-4xl leading-[1.1] text-cream md:text-6xl">
-          <em>A leitura como uma forma de <Terra>atenção</Terra>.</em>
-        </h2>
-        <div className="md:col-span-4">
-          <p className="font-serif text-lg italic text-cream/80">
-            Leituras para atravessar ciclos com mais clareza.
-          </p>
-          <a
-            href={WHATSAPP}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-6 inline-flex items-center gap-3 bg-terracotta px-6 py-3 text-xs font-medium uppercase tracking-[0.18em] text-background transition-all hover:bg-terracotta/85"
-          >
-            Agendar via WhatsApp →
-          </a>
-        </div>
-      </div>
+      <h2 className="max-w-4xl font-serif text-4xl leading-[1.1] text-cream md:text-6xl">
+        <em>Leituras para atravessar ciclos com mais <Terra>clareza</Terra>.</em>
+      </h2>
 
       <div className="mt-20 grid gap-px bg-border md:grid-cols-2">
         {SERVICES.map((s) => (
@@ -256,18 +241,26 @@ function Services() {
             key={s.title}
             className="group bg-background p-10 transition-colors hover:bg-card md:p-12"
           >
-            <div className="flex items-baseline gap-4">
-              <span className="label !text-terracotta">{s.n}</span>
-              <h3 className="font-serif text-2xl italic text-cream md:text-3xl">
-                {s.title}
-              </h3>
-            </div>
+            <h3 className="font-serif text-2xl italic text-cream md:text-3xl">
+              {s.title}
+            </h3>
             <div className="mt-6 h-px w-12 bg-terracotta/40 transition-all group-hover:w-20" />
             <p className="mt-6 font-serif text-base leading-[1.8] text-cream/85">
               {s.body}
             </p>
           </article>
         ))}
+      </div>
+
+      <div className="mt-16 flex justify-center">
+        <a
+          href={WHATSAPP}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-3 bg-terracotta px-7 py-4 text-sm font-medium uppercase tracking-[0.18em] text-background transition-all hover:bg-terracotta/85"
+        >
+          Agendar via WhatsApp →
+        </a>
       </div>
     </Section>
   );
