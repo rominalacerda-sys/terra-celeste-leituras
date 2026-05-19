@@ -375,7 +375,7 @@ function Contact() {
   return (
     <Section id="contato" num="05" title="Contato">
       <h2 className="max-w-4xl font-serif text-4xl leading-[1.1] text-cream md:text-6xl">
-        <em>Se algo aqui <Terra>tocou</Terra> você.</em>
+        <em>Quer entender o que o seu <Terra>céu</Terra> tem a dizer?</em>
       </h2>
       <p className="mt-10 max-w-2xl font-serif text-lg leading-[1.8] text-cream/85">
         Escreva algumas linhas sobre o que te traz. Cada mensagem é lida com
