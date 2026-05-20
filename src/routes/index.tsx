@@ -216,11 +216,11 @@ const SERVICES = [
   },
   {
     title: "Ano que se Abre",
-    body: "A cada aniversário, o Sol retorna ao ponto exato onde estava quando você nasceu. Esse momento gera um novo mapa — o tema do ciclo que está começando. Não como destino. Como convite — para entender o que esse ano está pedindo de você.",
+    body: "A cada aniversário, o Sol retorna ao ponto exato onde estava quando você nasceu. Esse momento gera um novo mapa que chamamos de Revolução Solar e que mostra os temas do ciclo que está começando. Um convite para entender o que esse ano está pedindo de você.",
   },
   {
     title: "Travessias",
-    body: "Os planetas continuam se movendo depois que você nasce. Quando tocam pontos do seu mapa natal, ativam processos internos e provocam acontecimentos externos. A pergunta não é 'o que vai acontecer?' — é 'o que está sendo chamado a crescer em mim agora?'",
+    body: "Os planetas continuam se movendo depois que você nasce. Quando tocam pontos do seu mapa natal, ativam processos internos e provocam acontecimentos externos. É o que chamamos de mapa de Trânsitos. A pergunta não é 'o que vai acontecer?' — é 'o que está sendo chamado a crescer em mim agora?'",
   },
   {
     title: "Navegando nas Marés Interiores",
