@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import portrait from "@/assets/romina-portrait.jpg";
+import bookCelestial from "@/assets/book-celestial.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -234,6 +235,23 @@ function Services() {
       <h2 className="max-w-4xl font-serif text-4xl leading-[1.1] text-cream md:text-6xl">
         <em>Leituras para atravessar ciclos com mais <Terra>clareza</Terra>.</em>
       </h2>
+
+      <figure className="mt-16 grid gap-8 md:grid-cols-12 md:items-end">
+        <div className="md:col-span-8 relative overflow-hidden aspect-[4/3] md:aspect-[16/10]">
+          <img
+            src={bookCelestial}
+            alt="Livro antigo aberto com ilustrações celestes e botânicas secas"
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+        <figcaption className="md:col-span-4 md:pb-2">
+          <p className="label">Uma página · um céu</p>
+          <p className="mt-4 font-serif text-lg italic leading-relaxed text-cream/80">
+            Cada mapa é lido como um texto antigo — com atenção ao que pede forma, ao que pede silêncio.
+          </p>
+        </figcaption>
+      </figure>
 
       <div className="mt-20 grid gap-px bg-border md:grid-cols-2">
         {SERVICES.map((s) => (
