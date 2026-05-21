@@ -331,7 +331,7 @@ function Projects() {
             Um projeto de Romina Lacerda, Raquel Florêncio e Nando Rebello.
           </p>
           <a
-            href="https://www.instagram.com/yash_sound_astro_yoga"
+            href="https://www.instagram.com/rominalacerdaastrologia"
             target="_blank"
             rel="noreferrer"
             className="label mt-8 inline-block !text-terracotta border-b border-terracotta/40 pb-1"
@@ -417,7 +417,7 @@ function Footer() {
         <div className="flex flex-col gap-2">
           <p className="label mb-2">Acompanhe</p>
           <a
-            href="https://www.instagram.com/yash_sound_astro_yoga"
+            href="https://www.instagram.com/rominalacerdaastrologia"
             target="_blank"
             rel="noreferrer"
             className="font-serif text-base text-cream/85 hover:text-terracotta"
