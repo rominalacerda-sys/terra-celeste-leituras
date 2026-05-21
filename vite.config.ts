@@ -5,14 +5,45 @@
 //     error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import fs from "node:fs";
+import path from "node:path";
 
-// Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-// @cloudflare/vite-plugin builds from this — wrangler.jsonc main alone is insufficient.
+// Static SPA build: prerender "/" into dist/client/index.html for static hosting (Netlify).
 export default defineConfig({
   tanstackStart: {
-    server: { entry: "server" },
-    prerender: {
-      routes: ["/"],
+    prerender: { enabled: true },
+    pages: [{ path: "/" }],
+    spa: {
+      enabled: true,
+      prerender: { outputPath: "/index" },
     },
+  },
+  vite: {
+    environments: {
+      server: {
+        build: {
+          rollupOptions: {
+            input: "index",
+          },
+        },
+      },
+    },
+    plugins: [
+      {
+        name: "copy-server-index-to-server",
+        apply: "build",
+        closeBundle: {
+          order: "post",
+          handler() {
+            const dir = path.resolve("dist/server");
+            const src = path.join(dir, "index.js");
+            const dest = path.join(dir, "server.js");
+            if (fs.existsSync(src) && !fs.existsSync(dest)) {
+              fs.copyFileSync(src, dest);
+            }
+          },
+        },
+      },
+    ],
   },
 });
