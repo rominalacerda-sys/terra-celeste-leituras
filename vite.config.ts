@@ -25,12 +25,16 @@ export default defineConfig({
         apply: "build",
         closeBundle: {
           order: "post",
-          handler() {
+          async handler() {
             const dir = path.resolve("dist/server");
-            const src = path.join(dir, "index.js");
+            const src = path.join(dir, "index.mjs");
             const dest = path.join(dir, "server.js");
             if (fs.existsSync(src) && !fs.existsSync(dest)) {
               fs.copyFileSync(src, dest);
+            }
+            const pkgJson = path.join(dir, "package.json");
+            if (!fs.existsSync(pkgJson)) {
+              fs.writeFileSync(pkgJson, JSON.stringify({ type: "module" }, null, 2));
             }
           },
         },
