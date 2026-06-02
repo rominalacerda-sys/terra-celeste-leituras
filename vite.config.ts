@@ -19,15 +19,6 @@ export default defineConfig({
     },
   },
   vite: {
-    environments: {
-      server: {
-        build: {
-          rollupOptions: {
-            input: "index",
-          },
-        },
-      },
-    },
     plugins: [
       {
         name: "copy-server-index-to-server",
