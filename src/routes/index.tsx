@@ -4,17 +4,84 @@ import portrait from "@/assets/romina-portrait.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Romina Lacerda — Astrologia Psicológica e Transpessoal" },
+      {
+        title:
+          "Romina Lacerda | Astrologia Psicológica e Transpessoal · Rio de Janeiro",
+      },
       {
         name: "description",
         content:
-          "Uma prática brasileira de astrologia psicológica e transpessoal. Leituras para atravessar ciclos com mais clareza. Rio de Janeiro.",
+          "Consultas de astrologia psicológica e transpessoal com Romina Lacerda. Mapa natal, revolução solar, trânsitos e ciclos lunares. Atendimento online. Rio de Janeiro.",
       },
-      { property: "og:title", content: "Romina Lacerda — Astrologia" },
+      {
+        name: "keywords",
+        content:
+          "astrologia psicológica, astrologia transpessoal, mapa natal, consulta astrológica online, astróloga Rio de Janeiro, revolução solar, trânsitos astrológicos, autoconhecimento",
+      },
+      { name: "author", content: "Romina Lacerda" },
+      {
+        property: "og:title",
+        content: "Romina Lacerda | Astrologia Psicológica e Transpessoal",
+      },
       {
         property: "og:description",
         content:
-          "Uma prática brasileira de astrologia psicológica e transpessoal.",
+          "Leituras para atravessar ciclos com mais clareza. Consultas online de astrologia psicológica e transpessoal.",
+      },
+      { property: "og:url", content: "https://rominalacerda.com.br" },
+      { property: "og:type", content: "website" },
+      { property: "og:locale", content: "pt_BR" },
+      {
+        property: "og:image",
+        content: "https://rominalacerda.com.br/hero-vase.png",
+      },
+      { name: "twitter:card", content: "summary_large_image" },
+      {
+        name: "twitter:title",
+        content: "Romina Lacerda | Astrologia Psicológica e Transpessoal",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Leituras para atravessar ciclos com mais clareza. Consultas online de astrologia psicológica e transpessoal.",
+      },
+      {
+        name: "twitter:image",
+        content: "https://rominalacerda.com.br/hero-vase.png",
+      },
+    ],
+    links: [
+      { rel: "canonical", href: "https://rominalacerda.com.br" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: "Romina Lacerda",
+          jobTitle: "Astróloga",
+          description:
+            "Astróloga especializada em astrologia psicológica e transpessoal. Consultas individuais online.",
+          url: "https://rominalacerda.com.br",
+          sameAs: [
+            "https://www.instagram.com/rominalacerdaastrologia",
+            "https://www.youtube.com/rominalacerda",
+          ],
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Rio de Janeiro",
+            addressCountry: "BR",
+          },
+          knowsAbout: [
+            "Astrologia Psicológica",
+            "Astrologia Transpessoal",
+            "Mapa Natal",
+            "Revolução Solar",
+            "Trânsitos Astrológicos",
+            "Ciclos Lunares",
+          ],
+        }),
       },
     ],
   }),
