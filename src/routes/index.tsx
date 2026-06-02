@@ -159,7 +159,7 @@ function Hero() {
           Mapa astral é a fotografia do céu no momento do nascimento — a representação dos arquétipos que todos nós possuímos.
         </p>
         <p className="mt-6 max-w-xl text-base leading-relaxed text-cream/50">
-          Uma prática de Astrologia Psicológica e Transpessoal. Leituras para atravessar ciclos com mais clareza.
+          Leituras de mapa para atravessar ciclos com mais clareza.
         </p>
         <div className="mt-12 flex flex-wrap items-center gap-6">
           <a
@@ -390,15 +390,15 @@ function Projects() {
             Três Forças · Um Caminho
           </p>
           <p className="mt-6 font-serif text-base leading-[1.8] text-cream/85">
-            Encontros presenciais no Rio de Janeiro que reúnem prática de Yoga,
+            Encontros presenciais regulares no Rio de Janeiro que reúnem prática de Yoga,
             banho de som e leitura astrológica coletiva. Uma experiência de
-            corpo, som e céu. Terceiro encontro realizado em maio de 2026.
+            corpo, som e céu.
           </p>
           <p className="mt-6 font-serif text-sm italic text-muted-foreground">
             Um projeto de Romina Lacerda, Raquel Florêncio e Nando Rebello.
           </p>
           <a
-            href="https://www.instagram.com/rominalacerdaastrologia"
+            href="https://www.instagram.com/yash_sound_astro_yoga"
             target="_blank"
             rel="noreferrer"
             className="label mt-8 inline-block !text-terracotta border-b border-terracotta/40 pb-1"
