@@ -11,15 +11,69 @@ import path from "node:path";
 // Static SPA build: prerender "/" into dist/client/index.html for static hosting (Netlify).
 export default defineConfig({
   tanstackStart: {
-    prerender: { enabled: true },
-    pages: [{ path: "/" }],
+    prerender: { enabled: false },
     spa: {
       enabled: true,
-      prerender: { outputPath: "/index" },
     },
   },
   vite: {
     plugins: [
+      {
+        name: "generate-static-index-html",
+        apply: "build",
+        closeBundle: {
+          order: "post",
+          async handler() {
+            const clientDir = path.resolve("dist/client");
+            const assetsDir = path.join(clientDir, "assets");
+
+            if (!fs.existsSync(assetsDir)) {
+              console.warn("[generate-static-index-html] dist/client/assets not found");
+              return;
+            }
+
+            const files = fs.readdirSync(assetsDir);
+            const cssFile = files.find((f) => f.endsWith(".css"));
+            const jsFile = files.find((f) => f.endsWith(".js") && f.startsWith("index-"));
+
+            const cssHref = cssFile ? `/assets/${cssFile}` : "";
+            const jsSrc = jsFile ? `/assets/${jsFile}` : "";
+
+            const html = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="vld4CK-pQH69z9UmRe4XCmRW5gKNT_nqvdcj7kJsFJA">
+<title>Romina Lacerda | Astrologia Psicológica e Transpessoal · Rio de Janeiro</title>
+<meta name="description" content="Consultas de astrologia psicológica e transpessoal com Romina Lacerda. Mapa natal, revolução solar, trânsitos e ciclos lunares. Atendimento online. Rio de Janeiro.">
+<meta name="keywords" content="astrologia psicológica, astrologia transpessoal, mapa natal, consulta astrológica online, astróloga Rio de Janeiro, revolução solar, trânsitos astrológicos, autoconhecimento">
+<meta name="author" content="Romina Lacerda">
+<meta property="og:title" content="Romina Lacerda | Astrologia Psicológica e Transpessoal">
+<meta property="og:description" content="Leituras para atravessar ciclos com mais clareza. Consultas online de astrologia psicológica e transpessoal.">
+<meta property="og:url" content="https://rominalacerda.com.br">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:image" content="https://rominalacerda.com.br/hero-vase.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Romina Lacerda | Astrologia Psicológica e Transpessoal">
+<meta name="twitter:description" content="Leituras para atravessar ciclos com mais clareza. Consultas online de astrologia psicológica e transpessoal.">
+<meta name="twitter:image" content="https://rominalacerda.com.br/hero-vase.png">
+<link rel="canonical" href="https://rominalacerda.com.br">
+${cssHref ? `<link rel="stylesheet" href="${cssHref}">` : ""}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Romina Lacerda","jobTitle":"Astróloga","description":"Astróloga especializada em astrologia psicológica e transpessoal. Consultas individuais online.","url":"https://rominalacerda.com.br","sameAs":["https://www.instagram.com/rominalacerdaastrologia","https://www.youtube.com/rominalacerda"],"address":{"@type":"PostalAddress","addressLocality":"Rio de Janeiro","addressCountry":"BR"},"knowsAbout":["Astrologia Psicológica","Astrologia Transpessoal","Mapa Natal","Revolução Solar","Trânsitos Astrológicos","Ciclos Lunares"]}</script>
+</head>
+<body>
+<div id="root"></div>
+${jsSrc ? `<script type="module" src="${jsSrc}"></script>` : ""}
+</body>
+</html>`;
+
+            fs.writeFileSync(path.join(clientDir, "index.html"), html);
+            console.log(`[generate-static-index-html] wrote dist/client/index.html`);
+          },
+        },
+      },
       {
         name: "copy-server-index-to-server",
         apply: "build",
