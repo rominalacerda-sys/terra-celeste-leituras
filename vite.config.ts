@@ -8,6 +8,39 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import fs from "node:fs";
 import path from "node:path";
 
+function getLatestAssetFile(clientDir: string, pattern: RegExp) {
+  const assetsDir = path.join(clientDir, "assets");
+  if (!fs.existsSync(assetsDir)) return "";
+
+  return fs
+    .readdirSync(assetsDir)
+    .filter((file) => pattern.test(file))
+    .sort()
+    .at(-1)
+    ? `/assets/${fs
+        .readdirSync(assetsDir)
+        .filter((file) => pattern.test(file))
+        .sort()
+        .at(-1)}`
+    : "";
+}
+
+function getBrowserEntryScript(clientDir: string) {
+  const assetsDir = path.join(clientDir, "assets");
+  if (!fs.existsSync(assetsDir)) return "";
+
+  const entryCandidate = fs
+    .readdirSync(assetsDir)
+    .filter((file) => file.endsWith(".js") && /^index-.*\.js$/.test(file))
+    .map((file) => ({
+      file,
+      contents: fs.readFileSync(path.join(assetsDir, file), "utf8"),
+    }))
+    .find(({ contents }) => contents.includes("hydrateRoot(document"));
+
+  return entryCandidate ? `/assets/${entryCandidate.file}` : "";
+}
+
 // Static SPA build: prerender "/" into dist/client/index.html for static hosting (Netlify).
 export default defineConfig({
   tanstackStart: {
@@ -25,19 +58,13 @@ export default defineConfig({
           order: "post",
           async handler() {
             const clientDir = path.resolve("dist/client");
-            const assetsDir = path.join(clientDir, "assets");
-
-            if (!fs.existsSync(assetsDir)) {
+            if (!fs.existsSync(path.join(clientDir, "assets"))) {
               console.warn("[generate-static-index-html] dist/client/assets not found");
               return;
             }
 
-            const files = fs.readdirSync(assetsDir);
-            const cssFile = files.find((f) => f.endsWith(".css"));
-            const jsFile = files.find((f) => f.endsWith(".js") && f.startsWith("index-"));
-
-            const cssHref = cssFile ? `/assets/${cssFile}` : "";
-            const jsSrc = jsFile ? `/assets/${jsFile}` : "";
+            const cssHref = getLatestAssetFile(clientDir, /\.css$/);
+            const jsSrc = getBrowserEntryScript(clientDir);
 
             const html = `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -60,11 +87,13 @@ export default defineConfig({
 <meta name="twitter:description" content="Leituras para atravessar ciclos com mais clareza. Consultas online de astrologia psicológica e transpessoal.">
 <meta name="twitter:image" content="https://rominalacerda.com.br/hero-vase.png">
 <link rel="canonical" href="https://rominalacerda.com.br">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap">
 ${cssHref ? `<link rel="stylesheet" href="${cssHref}">` : ""}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Romina Lacerda","jobTitle":"Astróloga","description":"Astróloga especializada em astrologia psicológica e transpessoal. Consultas individuais online.","url":"https://rominalacerda.com.br","sameAs":["https://www.instagram.com/rominalacerdaastrologia","https://www.youtube.com/rominalacerda"],"address":{"@type":"PostalAddress","addressLocality":"Rio de Janeiro","addressCountry":"BR"},"knowsAbout":["Astrologia Psicológica","Astrologia Transpessoal","Mapa Natal","Revolução Solar","Trânsitos Astrológicos","Ciclos Lunares"]}</script>
 </head>
 <body>
-<div id="root"></div>
 ${jsSrc ? `<script type="module" src="${jsSrc}"></script>` : ""}
 </body>
 </html>`;
