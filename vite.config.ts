@@ -7,6 +7,7 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import fs from "node:fs";
 import path from "node:path";
+import type { OutputAsset, OutputBundle, OutputChunk } from "rollup";
 
 function getLatestAssetFile(clientDir: string, pattern: RegExp) {
   const assetsDir = path.join(clientDir, "assets");
@@ -25,25 +26,36 @@ function getLatestAssetFile(clientDir: string, pattern: RegExp) {
     : "";
 }
 
-function getBrowserEntryScript(clientDir: string) {
-  const assetsDir = path.join(clientDir, "assets");
-  if (!fs.existsSync(assetsDir)) return "";
+function getClientEntryChunk(bundle: OutputBundle): OutputChunk | undefined {
+  return Object.values(bundle).find(
+    (item): item is OutputChunk =>
+      item.type === "chunk" && item.isEntry && item.fileName.endsWith(".js"),
+  );
+}
 
-  const entryCandidate = fs
-    .readdirSync(assetsDir)
-    .filter((file) => file.endsWith(".js") && /^index-.*\.js$/.test(file))
-    .map((file) => ({
-      file,
-      contents: fs.readFileSync(path.join(assetsDir, file), "utf8"),
-    }))
-    .find(({ contents }) => contents.includes("hydrateRoot(document"));
+function getClientCssHrefs(bundle: OutputBundle, entryChunk?: OutputChunk) {
+  const cssFromEntry = Array.from(
+    ((entryChunk as OutputChunk & {
+      viteMetadata?: { importedCss?: Set<string> };
+    })?.viteMetadata?.importedCss ?? new Set<string>()),
+  ).map((file) => `/${file}`);
 
-  return entryCandidate ? `/assets/${entryCandidate.file}` : "";
+  if (cssFromEntry.length > 0) {
+    return cssFromEntry;
+  }
+
+  return Object.values(bundle)
+    .filter(
+      (item): item is OutputAsset => item.type === "asset" && item.fileName.endsWith(".css"),
+    )
+    .map((item) => `/${item.fileName}`)
+    .sort();
 }
 
 // Static SPA build: prerender "/" into dist/client/index.html for static hosting (Netlify).
 export default defineConfig({
   tanstackStart: {
+    server: { entry: "server" },
     prerender: { enabled: false },
     spa: {
       enabled: true,
@@ -54,17 +66,18 @@ export default defineConfig({
       {
         name: "generate-static-index-html",
         apply: "build",
-        closeBundle: {
+        writeBundle: {
           order: "post",
-          async handler() {
-            const clientDir = path.resolve("dist/client");
-            if (!fs.existsSync(path.join(clientDir, "assets"))) {
-              console.warn("[generate-static-index-html] dist/client/assets not found");
+          async handler(outputOptions, bundle) {
+            if (!outputOptions.dir || !outputOptions.dir.endsWith("dist/client")) {
               return;
             }
 
-            const cssHref = getLatestAssetFile(clientDir, /\.css$/);
-            const jsSrc = getBrowserEntryScript(clientDir);
+            const clientDir = path.resolve(outputOptions.dir);
+            const entryChunk = getClientEntryChunk(bundle);
+            const jsSrc = entryChunk ? `/${entryChunk.fileName}` : "";
+            const cssHrefs = getClientCssHrefs(bundle, entryChunk);
+            const fallbackCssHref = cssHrefs[0] ?? getLatestAssetFile(clientDir, /\.css$/);
 
             const html = `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -90,7 +103,7 @@ export default defineConfig({
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap">
-${cssHref ? `<link rel="stylesheet" href="${cssHref}">` : ""}
+${fallbackCssHref ? `<link rel="stylesheet" href="${fallbackCssHref}">` : ""}
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Romina Lacerda","jobTitle":"Astróloga","description":"Astróloga especializada em astrologia psicológica e transpessoal. Consultas individuais online.","url":"https://rominalacerda.com.br","sameAs":["https://www.instagram.com/rominalacerdaastrologia","https://www.youtube.com/rominalacerda"],"address":{"@type":"PostalAddress","addressLocality":"Rio de Janeiro","addressCountry":"BR"},"knowsAbout":["Astrologia Psicológica","Astrologia Transpessoal","Mapa Natal","Revolução Solar","Trânsitos Astrológicos","Ciclos Lunares"]}</script>
 </head>
 <body>
